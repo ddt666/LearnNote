@@ -1,6 +1,10 @@
 [TOC]
 
+## [nginx入门与实战](https://www.cnblogs.com/pyyu/p/9468680.html)
+
 # 一、nginx安装配置
+
+- ngnix只能处理服务器上的静态资源，如css，js，html，mp4等
 
 > nginx-1.12.0
 
@@ -632,7 +636,7 @@ server {
 
 ![img](https://img2018.cnblogs.com/blog/1132884/201811/1132884-20181118212452965-931575034.png)
 
-## 1) 正向代理（vpn理解）
+### 1) 正向代理（vpn理解）
 
 - **正向代理，也就是传说中的代理,他的工作原理就像一个跳板（VPN），简单的说：**
 
@@ -640,8 +644,152 @@ server {
 
 ![img](https://img2018.cnblogs.com/blog/1132884/201811/1132884-20181118222300086-1972487571.png)
 
-## 2) 反向代理
+### 2) 反向代理
 
 - **对于客户端而言，代理服务器就像是原始服务器。**
 
 ![img](https://img2018.cnblogs.com/blog/1132884/201811/1132884-20181118222354608-408861475.png)
+
+## 2、nginx的反向代理功能
+
+### 1）实验准备，准备2台nginx机器
+
+- `机器1`  192.168.11.37  用作  `web服务器`，用作数据返回
+- `机器2`  192.168.11.158   用作nginx`反向代理服务器` 
+
+在windows中访问 反向代理服务器，然后让反向代理服务器 去拿 web服务器的数据
+
+**请求流程（request）**：windows   >   192.168.11.158   >   192.168.11.37
+
+**数据返回（response）流程**：windows   <   192.168.11.158   <   192.168.11.37
+
+**机器1， 作为`web服务器`，只是对数据页面的一个返回，**
+
+**配置如下**
+
+```python
+server {
+        listen       80;
+        server_name  192.168.11.37;
+
+        #charset koi8-r;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+}
+
+```
+**机器2，用作nginx的`反向代理服务器`，这个机器不存数据，只转发请求**
+**配置如下：**
+
+```python
+server {
+        listen       80;
+        server_name  192.168.11.158;
+
+
+		# 在这里进行反向代理配置，当请求地址是192.68.11.158，就会转发请求给192.168.11.37上
+		# 192.168.11.158/
+        location / {
+        
+	   		proxy_pass http://192.168.11.37;
+            #root   html;
+            #index  index.html index.htm;
+        }
+
+}
+
+```
+
+- 访问流程： 从`192.168.11.25` windows机器发起的请求，访问的是代理服务器`192.168.11.158`，转发给`192.168.11.37`
+
+# 九、负载均衡
+
+
+
+> 利用反向代理，实现服务器压力分担，达到集群的效果
+
+- 集群：一堆服务器做一件事
+- 集群的意义：
+  1. 高性能
+     - 淘宝本来的核心支付服务器是小型机，非常昂贵，且难以维护
+       后来都讲 服务器更换为集群架构
+       一堆便宜的服务器，维护者一个功能运转
+  2. 高可用
+     - 单点机器很可能宕机
+       集群单机机器宕机，不会影响整体的运转
+
+模拟：
+
+
+
+- 准备三台机器
+
+1. **`机器1`   nginx负载均衡器（发牌的荷官）   192.168.11.158**   
+
+**nginx.conf http配置如下：**
+
+```python
+#定义nginx负载均衡池，里面默认是轮训算法
+		#也可以用weight 权重算法
+		#也可以用ip_hash 算法
+		
+		upstream nginx_pools {
+			server  192.168.11.37  weight=10;
+			server 192.168.11.167  ;
+		}
+		server {
+			listen       80;
+			server_name  192.168.11.158;
+
+			
+			#在这里进行反向代理配置
+			#192.168.11.158/
+			location / {
+			proxy_pass http://nginx_pools;
+		}
+
+```
+
+
+
+2. **`机器2`   准备nginx  返回页面数据        `192.168.11.37`**   
+
+**nginx.conf http 配置如下**
+
+	
+			    server {
+					listen       80;
+					server_name  192.168.11.37;
+					location / {
+						root   /opt/jd;
+						index  index.html index.htm;
+					}
+					error_page  404              /40x.html;
+					error_page   500 502 503 504  /50x.html;
+					location = /50x.html {
+						root   html;
+					}
+	    }
+	
+3. **`机器3`   也准备nginx  返回页面数据      `192.168.11.167`**
+
+**nginx.conf http 配置如下**
+
+    server {
+            listen       80;
+            server_name  192.168.11.167;
+    
+            #charset koi8-r;
+    
+            #access_log  logs/host.access.log  main;
+    
+            location / {
+                root   html;
+                index  index.html index.htm;
+            }
+    
+**动静分离负载均衡等用法请参考**：[负载均衡](https://www.cnblogs.com/pyyu/p/10004681.html)
+
