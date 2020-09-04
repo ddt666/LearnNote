@@ -963,13 +963,13 @@ celery -A celery_demo worker -l info --beat
 >
 > - eventlet 是一个python的三方库，可以解决兼容问题 
 
-**安装 eventlet** 
+**安装 eventlet** ：
 
 ```bash
 pip install eventlet
 ```
 
-**启动celery命令：**
+**启动celery命令后面加上** `-P eventlet` ：
 
 ```bash
  celery worker -A tasks -l INFO -P eventlet 
