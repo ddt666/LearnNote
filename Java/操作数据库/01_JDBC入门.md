@@ -71,19 +71,19 @@ static void registerDriver(Driver driver) :注册与给定的驱动程序 Driver
 
   		2. 获取数据库连接：
 
-  			```java
-  			* 方法：static Connection getConnection(String url, String user, String password) 
-    			* 参数：
-      			  * url：指定连接的路径
-        			    * 语法：jdbc:mysql://ip地址(域名):端口号/数据库名称
-          			    * 例子：jdbc:mysql://localhost:3306/db3
-            			    * 细节：如果连接的是本机mysql服务器，并且mysql服务默认端口是3306，则url可以简写为：jdbc:mysql:///数据库名称
-              			  * user：用户名
-                			  * password：密码 
-                  			```
+```java
 
+   * 方法：static Connection getConnection(String url, String user, String password) 
+        * 参数：
+            * url：指定连接的路径
+            * 语法：jdbc:mysql://ip地址(域名):端口号/数据库名称
+            * 例子：jdbc:mysql://localhost:3306/db3
+            * 细节：如果连接的是本机mysql服务器，并且mysql服务默认端口是3306，则url可以简写为：jdbc:mysql:///数据库名称
+            * user：用户名
+            * password：密码 
 
-  	
+```
+
   2. Connection：数据库连接对象
   	1. 功能：
     		1. 获取执行sql 的对象
