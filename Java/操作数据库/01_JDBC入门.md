@@ -7,7 +7,7 @@
 ![JDBC本质](assets/JDBC本质.bmp)
 
 2. 快速入门：
-  * 步骤:
+  * 步骤: 
   	1. 导入驱动jar包 mysql-connector-java-5.1.37-bin.jar  
     		1.复制mysql-connector-java-5.1.37-bin.jar到项目的libs目录下
     		2.右键-->Add As Library
