@@ -1,4 +1,4 @@
-## 一、基本GET请求（headers参数 和 parmas参数）
+##  一、基本GET请求（headers参数 和 parmas参数）
 
 ### 1. 最基本的GET请求可以直接用get方法
 
