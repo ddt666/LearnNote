@@ -27,11 +27,11 @@
 	      System.out.println(b);
 	   
 	        String c = context.getRealPath("/WEB-INF/c.txt");*//WEB-INF目录下的资源访问*
-	     System.out.println(c);
+	       System.out.println(c);
 	   
 	        String a = context.getRealPath("/WEB-INF/classes/a.txt");*//src目录下的资源访问*
 	        System.out.println(a);
-	       
+	      
 	       
 
 ## 文件下载案例：
@@ -49,11 +49,11 @@
 
 * 步骤：
 	1. 定义页面，编辑超链接href属性，指向Servlet，传递资源名称filename
-	2. 定义Servlet
-		1. 获取文件名称
-		2. 使用字节输入流加载文件进内存
-		3. 指定response的响应头： content-disposition:attachment;filename=xxx
-		4. 将数据写出到response输出流
+	   1. 定义Servlet
+	   2. 获取文件名称
+	   3. 使用字节输入流加载文件进内存
+	   4. 指定response的响应头： content-disposition:attachment;filename=xxx
+	   5. 将数据写出到response输出流
 
 * 问题：
 	* 中文文件问题
