@@ -60,7 +60,19 @@
   	* request
   	* response
   	* out：字符输出流对象。可以将数据输出到页面上。和response.getWriter()类似
-    		* **response.getWriter()和out.write()的区别**：
-    			* 在tomcat服务器真正给客户端做出响应之前，会先找response缓冲区数据，再找out缓冲区数据。
-    			* response.getWriter()数据输出永远在out.write()之前
+        		* **response.getWriter()和out.write()的区别**：
+        			* 在tomcat服务器真正给客户端做出响应之前，会先找response缓冲区数据，再找out缓冲区数据。
+            			* response.getWriter()数据输出永远在out.write()之前
+
+|   变量名    |      真实类型       |                     作用                     |
+| :---------: | :-----------------: | :------------------------------------------: |
+| pageContext |     PageContext     | 当前页面共享数据，还可以获取其他八个内置对象 |
+|   request   | HttpServletRequest  |         一次请求访问的多个资源(转发)         |
+|   session   |     HttpSession     |             一次会话的多个请求间             |
+| application |   ServletContext    |              所有用户间共享数据              |
+|  response   | HttpServletResponse |                   响应对象                   |
+|    page     |       Object        |         当前页面(Servlet)的对象 this         |
+|     out     |      JspWriter      |          输出对象，数据输出到页面上          |
+|   config    |    ServletConfig    |              Servlet的配置对象               |
+|  exception  |      Throwable      |                   异常对象                   |
 
