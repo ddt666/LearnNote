@@ -26,14 +26,15 @@
 
 2. 遍历
 	1. js的遍历方式
+		
 		* *for(初始化值;循环结束条件;步长)*
 	2. jq的遍历方式
 		1. jq对象.*each(callback)*
 			1. 语法：
 				jquery对象.each(function(index,element){});
 					* index:就是元素在集合中的索引
-					* element：就是集合中的每一个元素对象
-
+				* element：就是集合中的每一个元素对象
+	
 					* this：集合中的每一个元素对象
 			2. 回调函数返回值：
 				* true:如果当前function返回为false，则结束循环(break)。
@@ -57,7 +58,7 @@
 			* 当单击jq对象对应的组件后，会执行fn1.第二次点击会执行fn2.....
 			
 		* 注意：1.9版本 .toggle() 方法删除,jQuery Migrate（迁移）插件可以恢复此功能。
-		 
+		
 			 <script src="../js/jquery-migrate-1.0.0.js" type="text/javascript" charset="utf-8"></script>
 	
 4. 案例
@@ -125,7 +126,7 @@
 		</html>
 		```
 		
-		 	2. 抽奖
+		2. 抽奖
 		
 		```html
 		<!DOCTYPE html>
